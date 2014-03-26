@@ -64,6 +64,9 @@ class GeoDataFrame(pandas.DataFrame):
 
         Overrides Pandas' data frame constructor to determine, which
         columns are GIS series.
+
+        .. seealso:: `pandas.DataFrame`
+
         """
         super().__init__(data, *args, **kw)
 

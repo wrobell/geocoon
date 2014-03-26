@@ -10,3 +10,14 @@ GeoCoon supports
 GeoCoon requires Python 3 and Pandas 0.13.1.
 
 The software is distributed under GPL v3 licence.
+
+Table of Contents
+-----------------
+
+.. toctree::
+   :maxdepth: 3
+
+   api
+   examples
+
+.. vim: sw=4:et:ai

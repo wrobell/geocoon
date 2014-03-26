@@ -1,17 +1,21 @@
 API
 ===
-from_sql
-Query SQL/MM database and return Pandas data frame with specified column as
-GIS series.
+.. autosummary::
 
-.. seealso:: pandas.from_sql
+   geocoon.from_shapes
+   geocoon.from_wkb
+   geocoon.read_sql
+   geocoon.GeoDataFrame
+   geocoon.PointSeries
 
-from_shapes
+.. autofunction:: geocoon.from_shapes
+.. autofunction:: geocoon.from_wkb
+.. autofunction:: geocoon.read_sql
 
-from_wkb
-Create a GIS series from collection of WKB binary strings.
+.. autoclass:: geocoon.GeoDataFrame
+   :members:
 
+.. autoclass:: geocoon.PointSeries
+   :members:
 
-PointSeries
-
-
+.. vim: sw=4:et:ai

@@ -17,9 +17,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+GeoCoon is a library to integrate Shapely GIS geometries with Pandas data
+frames.
+"""
+
 __version__ = '0.1.0'
 
-from .core import PointSeries
+from .core import PointSeries, GeoDataFrame
 from .sql import read_sql
 from .factory import from_shapes, from_wkb
 
