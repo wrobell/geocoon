@@ -20,6 +20,8 @@
 import pandas
 from functools import partial
 from shapely.geometry import Point
+
+from .meta import META_POINT
  
 #
 # GIS data frame and series definitions
@@ -172,21 +174,21 @@ def create_series_method(cls, method):
     return f
  
  
-def adapt_series(gis, cls):
+def adapt_series(gis, cls, gis_meta):
     """
     Adapt GIS series to return data stored in GIS object.
 
     :param gis: GIS object class.
     :param cls: GIS series class.
+    :param gis_meta: GIS object class metadata.
     """
-    attrs = (a for a in dir(gis) if not a.startswith('_'))
-    for name in attrs:
+    for name, meta in gis_meta.items():
         attr = getattr(gis, name)
-        if callable(attr):
+        if meta.is_property:
+            adapt_attr(cls, name)
+        else:
             wrapper = create_series_method(gis, attr)
             setattr(cls, name, wrapper)
-        else:
-            adapt_attr(cls, name)
 
 
 #
@@ -200,7 +202,7 @@ for m in df_methods:
     setattr(GeoDataFrame, m, wrap_df_method(mt))
 
 # adapt GIS series
-adapt_series(Point, PointSeries)
+adapt_series(Point, PointSeries, META_POINT)
  
 
 # vim: sw=4:et:ai
