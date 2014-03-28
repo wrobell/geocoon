@@ -25,8 +25,8 @@ from .factory import from_wkb
 def read_sql(sql, con, geom_col, index_col=None, coerce_float=True,
         params=None):
     """
-    Query SQL/MM database and return Pandas data frame with specified
-    column as GIS series.
+    Query SQL/MM database and return GIS data frame with specified column
+    as GIS series.
 
     :param geom_col: GIS column (can be collection of column names).
 
