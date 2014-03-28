@@ -187,7 +187,7 @@ def adapt_series(gis, cls, gis_meta):
         if meta.is_property:
             adapt_attr(cls, name)
         else:
-            wrapper = create_series_method(gis, attr)
+            wrapper = create_series_method(gis, name)
             setattr(cls, name, wrapper)
 
 

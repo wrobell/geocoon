@@ -25,6 +25,7 @@ import pandas
 from shapely.geometry import Point
 
 from geocoon.core import PointSeries, GeoDataFrame, fetch_attr
+from geocoon.meta import META_POINT
 
 import unittest
 
@@ -97,24 +98,13 @@ class GeoDataFrameTestCase(unittest.TestCase):
         df = df[df.b == 4]
         self.assertEquals(PointSeries, type(df.a))
         self.assertTrue(all([4] * 2 == df.b))
-        
 
- 
+
+
 class GeoSeriesTestCase(unittest.TestCase):
     """
     Basic GIS series tests.
     """
-    def test_pt_adaptation_coordinates(self):
-        """
-        Test adaptation of point coordinates in GIS series
-        """
-        data = [Point(v, v * 2, v * 3) for v in [1, 2]]
-        series = PointSeries(data)
-        self.assertTrue([1, 2, 3], series.x)
-        self.assertTrue([2, 4, 6], series.y)
-        self.assertTrue([3, 6, 9], series.z)
-
-
     def test_create(self):
         """
         Test GIS series creation
@@ -132,8 +122,8 @@ class GeoSeriesTestCase(unittest.TestCase):
         series = PointSeries(data)
         y = fetch_attr(series, name='y')
         self.assertTrue(all(y == [2, 4]))
-     
-     
+
+
     def test_select(self):
         """
         Test selecting from GIS series
@@ -157,8 +147,8 @@ class GeoSeriesTestCase(unittest.TestCase):
 
         p = series[1]
         self.assertEquals(Point, type(p))
-     
-     
+
+
     def test_slice(self):
         """
         Test slicing GIS series
@@ -171,6 +161,43 @@ class GeoSeriesTestCase(unittest.TestCase):
         self.assertEquals(PointSeries, type(sub))
         self.assertTrue(all([1, 2, 3] == sub.x))
         self.assertTrue(all([2, 4, 6] == sub.y))
- 
- 
+
+
+class PointSeriesTestCase(unittest.TestCase):
+    """
+    Point GIS series unit tests.
+    """
+    def test_property_adapt(self):
+        """
+        Test adaptation of point properties
+        """
+        data = [Point(v, v * 2, v * 3) for v in [5, 2, 4]]
+        series = PointSeries(data)
+        attrs = (k for k, v in META_POINT.items() if v.is_property)
+        for attr in attrs:
+            value = getattr(series, attr) # no error? good
+            self.assertEquals(3, len(value))
+            self.assertTrue(all(not callable(v) for v in value))
+
+
+    def test_method_adapt(self):
+        """
+        Test adaptation of point methods
+        """
+        p1 = [Point(v, v * 2, v * 3) for v in [5, 2, 4]]
+        p2 = [Point(v, v * 2, v * 3) for v in [5, 2]] + [Point(4.1, 1, 1)]
+        s1 = PointSeries(p1)
+        s2 = PointSeries(p2)
+        methods = (k for k, v in META_POINT.items() if v.first_is_geom)
+        for method in methods:
+            mcall = getattr(s1, method) # no error? good
+            value = mcall(s2)
+            self.assertEquals(3, len(value))
+            self.assertTrue(all(not callable(v) for v in value))
+
+        # just in case
+        value = s1.equals(s2)
+        self.assertTrue(all([True, True, False] == value), value)
+
+
 # vim: sw=4:et:ai
