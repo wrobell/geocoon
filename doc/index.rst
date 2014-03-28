@@ -3,9 +3,9 @@ frames.
 
 GeoCoon supports
 
-- point and line string geometries (more to come)
-- SQL/MM databases (i.e. PostgreSQL + Postgis)
-- multiple geometry columns in a data frame
+#. Point and line string geometries (more to come).
+#. SQL/MM databases (i.e. PostgreSQL + Postgis).
+#. Multiple geometry columns in a data frame.
 
 GeoCoon requires Python 3 and Pandas 0.13.1.
 
@@ -17,7 +17,7 @@ Table of Contents
 .. toctree::
    :maxdepth: 3
 
+   usage
    api
-   examples
 
 .. vim: sw=4:et:ai

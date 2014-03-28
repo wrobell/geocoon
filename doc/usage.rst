@@ -1,5 +1,5 @@
-Examples
-========
+Using GeoCoon
+=============
 Create points
 
 .. doctest::
