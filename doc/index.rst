@@ -3,7 +3,7 @@ frames.
 
 GeoCoon supports
 
-- all Shapely geometries
+- point and line string geometries (more to come)
 - SQL/MM databases (i.e. PostgreSQL + Postgis)
 - multiple geometry columns in a data frame
 
