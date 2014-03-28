@@ -22,10 +22,11 @@ GeoCoon core unit tests.
 """
 
 import pandas
-from shapely.geometry import Point
+from shapely.geometry import Point, LineString
 
-from geocoon.core import PointSeries, GeoDataFrame, fetch_attr
-from geocoon.meta import META_POINT
+from geocoon.core import GeoDataFrame, PointSeries, LineStringSeries, \
+    fetch_attr
+from geocoon.meta import META_POINT, META_LINE_STRING
 
 import unittest
 
@@ -198,6 +199,57 @@ class PointSeriesTestCase(unittest.TestCase):
         # just in case
         value = s1.equals(s2)
         self.assertTrue(all([True, True, False] == value), value)
+
+
+
+class LineStringSeriesTestCase(unittest.TestCase):
+    """
+    Line string GIS series unit tests.
+    """
+    def test_property_adapt(self):
+        """
+        Test adaptation of line string properties
+        """
+        d1 = tuple((v, v * 1, v * 4) for v in (5, 2, 4))
+        d2 = tuple((v, v * 2, v * 5) for v in [5, 2, 4])
+        d3 = tuple((v, v * 3, v * 6) for v in [5, 2, 4])
+
+        l1 = LineString(d1)
+        l2 = LineString(d2)
+        l3 = LineString(d3)
+
+        series = LineStringSeries([l1, l2, l3])
+
+        attrs = (k for k, v in META_LINE_STRING.items() if v.is_property)
+        for attr in attrs:
+            value = getattr(series, attr) # no error? good
+            self.assertEquals(3, len(value))
+            self.assertTrue(all(not callable(v) for v in value))
+
+
+    def test_method_adapt(self):
+        """
+        Test adaptation of line string methods
+        """
+        d1 = tuple((v, v * 1, v * 4) for v in (5, 2, 4))
+        d2 = tuple((v, v * 2, v * 5) for v in [5, 2, 4])
+        d3 = tuple((v, v * 3, v * 6) for v in [5, 2, 4])
+        d4 = tuple((v, v * 4, v * 7) for v in [5, 2, 4])
+
+        l1 = LineString(d1)
+        l2 = LineString(d2)
+        l3 = LineString(d3)
+        l4 = LineString(d4)
+
+        s1 = LineStringSeries([l1, l2, l3])
+        s2 = LineStringSeries([l2, l3, l4])
+
+        methods = (k for k, v in META_LINE_STRING.items() if v.first_is_geom)
+        for method in methods:
+            mcall = getattr(s1, method) # no error? good
+            value = mcall(s2)
+            self.assertEquals(3, len(value))
+            self.assertTrue(all(not callable(v) for v in value))
 
 
 # vim: sw=4:et:ai

@@ -104,4 +104,21 @@ META_POINT.update({
     # 'm': meta(is_property=True),
 })
 
+
+META_CURVE = META_GEOMETRY.copy()
+META_CURVE.update({
+    'length': meta(is_property=True),
+    # 'start_point': meta(returns_geom=True, is_property=True),
+    # 'end_point': meta(returns_geom=True, is_property=True),
+    # 'is_closed': meta(is_property=True),
+    'is_ring': meta(is_property=True),
+})
+
+META_LINE_STRING = META_CURVE.copy()
+META_LINE_STRING.update({
+    # 'num_points': meta(is_property=True),
+    # 'point_n': meta(returns_geom=True),
+})
+
+
 # vim: sw=4:et:ai

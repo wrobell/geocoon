@@ -19,9 +19,9 @@
 
 import pandas
 from functools import partial
-from shapely.geometry import Point
+from shapely.geometry import Point, LineString
 
-from .meta import META_POINT
+from .meta import META_POINT, META_LINE_STRING
  
 #
 # GIS data frame and series definitions
@@ -50,10 +50,19 @@ class GeoSeries(pandas.Series):
         return self.__class__
 
 
+
 class PointSeries(GeoSeries):
     """
     GIS point series.
     """
+
+
+
+class LineStringSeries(GeoSeries):
+    """
+    GIS line string series.
+    """
+
 
 
 class GeoDataFrame(pandas.DataFrame):
@@ -203,6 +212,7 @@ for m in df_methods:
 
 # adapt GIS series
 adapt_series(Point, PointSeries, META_POINT)
+adapt_series(LineString, LineStringSeries, META_LINE_STRING)
  
 
 # vim: sw=4:et:ai
