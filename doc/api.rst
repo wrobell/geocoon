@@ -7,6 +7,7 @@ API
    geocoon.read_sql
    geocoon.GeoDataFrame
    geocoon.PointSeries
+   geocoon.LineStringSeries
 
 .. autofunction:: geocoon.from_shapes
 .. autofunction:: geocoon.from_wkb
@@ -16,6 +17,9 @@ API
    :members:
 
 .. autoclass:: geocoon.PointSeries
+   :members:
+
+.. autoclass:: geocoon.LineStringSeries
    :members:
 
 .. vim: sw=4:et:ai
