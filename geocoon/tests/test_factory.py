@@ -19,10 +19,10 @@
 
 import binascii
 
-from shapely.geometry import Point
+from shapely.geometry import Point, LineString
 
-from geocoon.factory import from_shapes, from_wkb
-from geocoon.core import PointSeries
+from geocoon.factory import from_shapes, from_wkb, as_line_string
+from geocoon.core import GeoDataFrame, PointSeries, LineStringSeries
 
 import unittest
 
@@ -54,5 +54,76 @@ class FactoryTestCase(unittest.TestCase):
         series = from_wkb(points)
         self.assertEquals(PointSeries, type(series))
 
+
+
+class LineStringFactoryTestCase(unittest.TestCase):
+    """
+    GIS line string series factory tests.
+    """
+
+    def test_line_string_pt(self):
+        """
+        Test creating line string from series (points 2d)
+        """
+        data = {
+            'device': ['dev1', 'dev1', 'dev2', 'dev2', 'dev2'],
+            'location': PointSeries([
+                Point(1, 11), # dev1
+                Point(1, 13),
+                Point(2, 21), # dev2
+                Point(2, 23),
+                Point(2, 25),
+            ])
+        }
+        data = GeoDataFrame(data)
+        series = as_line_string(data.location)
+
+        self.assertTrue(isinstance(series, LineString))
+
+
+    def test_grouped_series_pt(self):
+        """
+        Test creating line string series from grouped series (points 2d)
+        """
+        data = {
+            'device': ['dev1', 'dev1', 'dev2', 'dev2', 'dev2'],
+            'location': PointSeries([
+                Point(1, 11), # dev1
+                Point(1, 13),
+                Point(2, 21), # dev2
+                Point(2, 23),
+                Point(2, 25),
+            ])
+        }
+        data = GeoDataFrame(data).groupby('device')
+        print(data.location)
+        series = as_line_string(data.location)
+
+        self.assertTrue(isinstance(series, LineStringSeries))
+        self.assertEquals(2, len(series))
+        self.assertEquals(2, series[0].length) # dev1
+        self.assertEquals(4, series[1].length) # dev2
+
+
+    def test_grouped_series_pt_3d(self):
+        """
+        Test creating line string series from grouped series (points 3d)
+        """
+        data = {
+            'device': ['dev1', 'dev1', 'dev2', 'dev2', 'dev2'],
+            'location': PointSeries([
+                Point(1, 11, 111), # dev1
+                Point(1, 13, 113),
+                Point(2, 21, 221), # dev2
+                Point(2, 23, 223),
+                Point(2, 25, 225),
+            ])
+        }
+        data = GeoDataFrame(data).groupby('device')
+        series = as_line_string(data.location)
+
+        self.assertTrue(isinstance(series, LineStringSeries))
+        self.assertEquals(2, len(series))
+        self.assertTrue(series[0].has_z)
 
 # vim: sw=4:et:ai

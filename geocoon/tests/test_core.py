@@ -262,29 +262,6 @@ class LineStringSeriesTestCase(unittest.TestCase):
             self.assertTrue(all(not callable(v) for v in value))
 
 
-    def test_group_points(self):
-        """
-        Test creating line string series from grouped points
-        """
-        data = {
-            'device': ['dev1', 'dev1', 'dev2', 'dev2', 'dev2'],
-            'location': PointSeries([
-                Point(1, 11), # dev1
-                Point(1, 13),
-                Point(2, 21), # dev2
-                Point(2, 23),
-                Point(2, 25),
-            ])
-        }
-        data = GeoDataFrame(data).groupby('device')
-        series = LineStringSeries.group_points(data.location)
-
-        self.assertTrue(isinstance(series, LineStringSeries))
-        self.assertEquals(2, len(series))
-        self.assertEquals(2, series[0].length) # dev1
-        self.assertEquals(4, series[1].length) # dev2
-
-
 
 class PolygonSeriesTestCase(unittest.TestCase):
     """

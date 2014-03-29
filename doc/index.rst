@@ -1,3 +1,10 @@
+.. rst-class:: align-center
+
+.. `NEWS <https://freecode.com/projects/decotengu/announcements>`_
+`DOWNLOAD <http://pypi.python.org/pypi/geocoon>`_
+| `BUGS <https://github.com/wrobell/geocoon/issues>`_
+| `SOURCE CODE <https://github.com/wrobell/geocoon>`_
+
 GeoCoon is a library to integrate Shapely GIS geometries with Pandas data
 frames.
 

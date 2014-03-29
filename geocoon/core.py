@@ -62,22 +62,6 @@ class LineStringSeries(GeoSeries):
     """
     GIS line string series.
     """
-    @classmethod
-    def group_points(cls, points):
-        """
-        Create GIS line string series of line strings from points.
-
-        The method works for grouped GIS series - for each grouping key
-        a line string is created.
-
-        Use :py:func:`geocoon.from_shapes` to create one line string from
-        all points in a GIS series.
-
-        :param points: GIS point series.
-        """
-        create = lambda points: LineString((p.x, p.y) for p in points)
-        line = points.apply(create)
-        return LineStringSeries(line)
 
 
 

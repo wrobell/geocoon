@@ -18,7 +18,9 @@
 #
 
 import pandas
+from pandas.core.groupby import SeriesGroupBy
 import shapely.wkb
+import shapely.geometry
 
 import binascii
 
@@ -47,6 +49,27 @@ def from_wkb(wkb, index=None):
     to_bin = lambda v: v if isinstance(v, bytes) else binascii.unhexlify(v)
     shapes = (shapely.wkb.loads(to_bin(v)) for v in wkb)
     return from_shapes(shapes, index=index)
+
+
+def as_line_string(series):
+    """
+    Create line string from GIS series.
+
+    The method works for grouped GIS series - for each grouping key
+    a line string is created.
+
+    Use :py:func:`geocoon.from_shapes` to create one line string from
+    all points in a GIS series.
+
+    :param series: GIS series.
+    """
+    get_pt = lambda p: ((p.x, p.y, p.z) if p.has_z else (p.x, p.y))
+    create = lambda series: shapely.geometry.LineString(get_pt(p) for p in series)
+    if isinstance(series, SeriesGroupBy):
+        line = series.apply(create)
+        return geocoon.core.LineStringSeries(line)
+    else:
+        return create(series)
 
 
 # vim: sw=4:et:ai
