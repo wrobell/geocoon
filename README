@@ -7,6 +7,6 @@ GeoCoon supports
 - SQL/MM databases (i.e. PostgreSQL + Postgis)
 - multiple geometry columns in a data frame
 
-GeoCoon requires Python 3 and Pandas 0.13.1.
+GeoCoon requires Shapely 1.3.0, Pandas 0.13.0 and Python 3.
 
 The software is distributed under GPL v3 licence.
