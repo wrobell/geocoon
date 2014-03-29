@@ -19,4 +19,7 @@ Table of Contents
    usage
    api
 
+* :ref:`genindex`
+* :ref:`search`
+
 .. vim: sw=4:et:ai
