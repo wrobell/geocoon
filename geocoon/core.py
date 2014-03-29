@@ -227,6 +227,10 @@ def create_series_method(cls, gis, method, meta):
     else:
         f = f_non_geom
         f.__doc__ = doc
+
+    f.__doc__ += '\n\nThe method returns {} object.'.format(
+        series_cls.__qualname__
+    )
     return f
  
  
