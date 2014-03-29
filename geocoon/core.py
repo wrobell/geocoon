@@ -205,17 +205,27 @@ def create_series_method(cls, method, first_is_geom):
     :param method: Method name.
     :param first_is_geom: True if first parameter is a geometry.
     """
-    def f_geom(self, ot, *args, **kw):
+    def f_geom(self, other, *args, **kw):
         mcall = getattr(cls, method)
-        data = (mcall(s, o, *args, **kw) for s, o in zip(self, ot))
+        data = (mcall(s, o, *args, **kw) for s, o in zip(self, other))
         return pandas.Series(data, index=self.index)
 
-    def f(self, *args, **kw):
+    def f_non_geom(self, *args, **kw):
         mcall = getattr(cls, method)
         data = (mcall(s, *args, **kw) for s in self)
         return pandas.Series(data, index=self.index)
 
-    return f_geom if first_is_geom else f
+    doc = 'Vectorized version of :py:meth:`{}.{}` method.'.format(
+        cls.__qualname__, method
+    )
+    if first_is_geom:
+        f = f_geom
+        f.__doc__ = doc + '\n\n' \
+            + 'The `other` parameter of the method is GIS series object.'
+    else:
+        f = f_non_geom
+        f.__doc__ = doc
+    return f
  
  
 def adapt_series(gis, cls, gis_meta):
