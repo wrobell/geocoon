@@ -80,16 +80,16 @@ frame and contains multiple series and GIS series columns.
            |                           |               .
    +--------------+              +--------------+      |
    | GeoDataFrame |------------->| <<abstract>> |<-.-.-.
-   +--------------+         1..* |  GeoSeries   |     
-                                 +--------------+     
-                                        |           
-                                        |           
-                                        | 0..*      
-                                       \|/           
-                        +---------------------------------+
-                        | shapely::geometry::BaseGeometry |
-                        +---------------------------------+
- 
+   +--------------+         1..* |  GeoSeries   |
+                                +--------------+
+                                       |
+                                       |
+                                       | 0..*
+                                      \|/
+                       +---------------------------------+
+                       | shapely::geometry::BaseGeometry |
+                       +---------------------------------+
+
 
 The GIS series contain a collection of Shapely geometries. Gis series
 classes implement vectorized methods, which mimic Shapely geometries API.
