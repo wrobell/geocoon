@@ -183,20 +183,26 @@ def adapt_attr(cls, name):
     setattr(cls, name, property(f))
 
  
-def create_series_method(cls, method):
+def create_series_method(cls, method, first_is_geom):
     """
     Create GIS series method to return series of values returned by method
     call on each object in the series.
 
     :param cls: GIS series class.
     :param method: Method name.
+    :param first_is_geom: True if first parameter is a geometry.
     """
-    def f(self, ot, *args, **kw):
+    def f_geom(self, ot, *args, **kw):
         mcall = getattr(cls, method)
         data = (mcall(s, o, *args, **kw) for s, o in zip(self, ot))
         return pandas.Series(data, index=self.index)
- 
-    return f
+
+    def f(self, *args, **kw):
+        mcall = getattr(cls, method)
+        data = (mcall(s, *args, **kw) for s in self)
+        return pandas.Series(data, index=self.index)
+
+    return f_geom if first_is_geom else f
  
  
 def adapt_series(gis, cls, gis_meta):
@@ -212,7 +218,7 @@ def adapt_series(gis, cls, gis_meta):
         if meta.is_property:
             adapt_attr(cls, name)
         else:
-            wrapper = create_series_method(gis, name)
+            wrapper = create_series_method(gis, name, meta.first_is_geom)
             setattr(cls, name, wrapper)
 
 

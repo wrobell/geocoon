@@ -178,12 +178,21 @@ class PointSeriesTestCase(unittest.TestCase):
         for attr in attrs:
             value = getattr(series, attr) # no error? good
             self.assertEquals(3, len(value))
-            self.assertTrue(all(not callable(v) for v in value))
 
 
-    def test_method_adapt(self):
+    def test_method_adapt_buffer(self):
         """
-        Test adaptation of point methods
+        Test adaptation of point buffer method
+        """
+        data = [Point(v, v * 2, v * 3) for v in [5, 2, 4]]
+        series = PointSeries(data)
+        value = series.buffer(0.2, resolution=3) # no error? good
+        self.assertEquals(3, len(value))
+
+
+    def test_method_adapt_geom(self):
+        """
+        Test adaptation of point methods (first param is geometry)
         """
         p1 = [Point(v, v * 2, v * 3) for v in [5, 2, 4]]
         p2 = [Point(v, v * 2, v * 3) for v in [5, 2]] + [Point(4.1, 1, 1)]
