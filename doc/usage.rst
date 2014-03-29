@@ -21,22 +21,23 @@ Create data frame
 
 .. doctest::
 
-    >>> ends = ['a', 'b']
-    >>> data = geocoon.GeoDataFrame({'point': points, 'end': ends})
-    >>> data
+   >>> ends = ['a', 'b']
+   >>> data = geocoon.GeoDataFrame({'point': points, 'end': ends})
+   >>> data
      end        point
-    0   a  POINT (1 1)
-    1   b  POINT (2 2)
-    <BLANKLINE>
-    [2 rows x 2 columns]
+   0   a  POINT (1 1)
+   1   b  POINT (2 2)
+   <BLANKLINE>
+   [2 rows x 2 columns]
 
 Query a data frame
 
 .. doctest::
 
-    >>> data[data.end == 'a']
-    0   a  POINT (1 1)
-    <BLANKLINE>
-    [1 rows x 2 columns]
+   >>> data[data.end == 'a']
+     end        point
+   0   a  POINT (1 1)
+   <BLANKLINE>
+   [1 rows x 2 columns]
 
 .. vim: sw=4:et:ai
