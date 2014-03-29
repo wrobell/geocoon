@@ -180,15 +180,19 @@ def fetch_attr(series, name):
     return pandas.Series(data, index=series.index)
  
  
-def adapt_attr(cls, name):
+def adapt_attr(cls, gis, name):
     """
     Adapt GIS series to return series using attribute value of each object
     stored in the series.
 
     :param cls: GIS series class.
+    :param gis: Shapely geometry class.
     :param name: Attribute name.
     """
     f = partial(fetch_attr, name=name)
+    f.__doc__ = 'Vectorized version of :py:attr:`{}.{}` property.'.format(
+        gis.__qualname__, name
+    )
     setattr(cls, name, property(f))
 
  
@@ -225,7 +229,7 @@ def adapt_series(gis, cls, gis_meta):
     for name, meta in gis_meta.items():
         attr = getattr(gis, name)
         if meta.is_property:
-            adapt_attr(cls, name)
+            adapt_attr(cls, gis, name)
         else:
             wrapper = create_series_method(gis, name, meta.first_is_geom)
             setattr(cls, name, wrapper)
