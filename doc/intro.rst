@@ -1,3 +1,13 @@
+Introduction
+============
+Installation
+------------
+To install GeoCoon use `pip`::
+
+    pip install geocoon
+
+GeoCoon requires Shapely 1.3.0, Pandas 0.13.0 and Python 3.
+
 Data Model
 ----------
 The GeoCoon data model and its context is shown on the diagram below.
