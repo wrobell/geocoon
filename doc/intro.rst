@@ -38,22 +38,20 @@ For example, given GIS series of points
     >>> from shapely.geometry import Point
     >>> points = PointSeries([Point(1, 1), Point(2, 2)])
 
-the
+the points `x` coordinate access returns series of float numbers
 
     >>> points.x
     0    1
     1    2
     dtype: float64
 
-returns series of `x` coordinate values - series of float numbers and
+and points buffer calculation returns GIS series of line polygons for each
+point
 
     >>> points.buffer(0.3, resolution=3)
     0    POLYGON ((1.3 1, 1.259807621135332 0.850000000...
     1    POLYGON ((2.3 2, 2.259807621135332 1.85, 2.15 ...
     dtype: object
-
-returns line string series of line strings geometries - calculated buffers
-for each point.
 
 It is important to remember that the vectorized methods always compute
 values and therefore their calls are expensive. For example, given data
