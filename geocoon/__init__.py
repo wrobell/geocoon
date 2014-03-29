@@ -24,7 +24,8 @@ frames.
 
 __version__ = '0.1.0'
 
-from .core import GeoDataFrame, PointSeries, LineStringSeries
+from .core import GeoDataFrame, PointSeries, LineStringSeries, \
+    PolygonSeries
 from .sql import read_sql
 from .factory import from_shapes, from_wkb
 

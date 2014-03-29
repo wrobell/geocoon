@@ -2,16 +2,13 @@ API
 ===
 .. autosummary::
 
-   geocoon.from_shapes
-   geocoon.from_wkb
-   geocoon.read_sql
    geocoon.GeoDataFrame
    geocoon.PointSeries
    geocoon.LineStringSeries
-
-.. autofunction:: geocoon.from_shapes
-.. autofunction:: geocoon.from_wkb
-.. autofunction:: geocoon.read_sql
+   geocoon.PolygonSeries
+   geocoon.read_sql
+   geocoon.from_shapes
+   geocoon.from_wkb
 
 .. autoclass:: geocoon.GeoDataFrame
    :members:
@@ -21,5 +18,12 @@ API
 
 .. autoclass:: geocoon.LineStringSeries
    :members:
+
+.. autoclass:: geocoon.PolygonSeries
+   :members:
+
+.. autofunction:: geocoon.read_sql
+.. autofunction:: geocoon.from_shapes
+.. autofunction:: geocoon.from_wkb
 
 .. vim: sw=4:et:ai
