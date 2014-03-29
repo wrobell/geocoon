@@ -22,11 +22,11 @@ GeoCoon core unit tests.
 """
 
 import pandas
-from shapely.geometry import Point, LineString
+from shapely.geometry import Point, LineString, Polygon
 
 from geocoon.core import GeoDataFrame, PointSeries, LineStringSeries, \
-    fetch_attr
-from geocoon.meta import META_POINT, META_LINE_STRING
+    PolygonSeries, fetch_attr
+from geocoon.meta import META_POINT, META_LINE_STRING, META_POLYGON
 
 import unittest
 
@@ -282,6 +282,56 @@ class LineStringSeriesTestCase(unittest.TestCase):
         self.assertEquals(2, len(series))
         self.assertEquals(2, series[0].length) # dev1
         self.assertEquals(4, series[1].length) # dev2
+
+
+
+class PolygonSeriesTestCase(unittest.TestCase):
+    """
+    Polygon GIS series unit tests.
+    """
+    def test_property_adapt(self):
+        """
+        Test adaptation of polygon properties
+        """
+        poly = lambda v: Polygon(((v, v), (v + 0.1, v), (v + 0.2, v + 0.2), (v, v)))
+        data = [poly(v) for v in [5, 2, 4]]
+        series = PolygonSeries(data)
+        attrs = (k for k, v in META_POLYGON.items() if v.is_property)
+        for attr in attrs:
+            value = getattr(series, attr) # no error? good
+            self.assertEquals(3, len(value))
+
+
+    def test_method_adapt_buffer(self):
+        """
+        Test adaptation of polygon buffer method
+        """
+        poly = lambda v: Polygon(((v, v), (v + 0.1, v), (v + 0.2, v + 0.2), (v, v)))
+        data = [poly(v) for v in [5, 2, 4]]
+        series = PolygonSeries(data)
+        value = series.buffer(0.2, resolution=3) # no error? good
+        self.assertEquals(3, len(value))
+
+
+    def test_method_adapt_geom(self):
+        """
+        Test adaptation of polygon methods (first param is geometry)
+        """
+        poly = lambda v: Polygon(((v, v), (v + 0.1, v), (v + 0.2, v + 0.2), (v, v)))
+        p1 = [poly(v) for v in [5, 2, 4]]
+        p2 = [poly(v) for v in [6, 2, 3]]
+        s1 = PolygonSeries(p1)
+        s2 = PolygonSeries(p2)
+        methods = (k for k, v in META_POLYGON.items() if v.first_is_geom)
+        for method in methods:
+            mcall = getattr(s1, method) # no error? good
+            value = mcall(s2)
+            self.assertEquals(3, len(value))
+            self.assertTrue(all(not callable(v) for v in value))
+
+        # just in case
+        value = s1.equals(s2)
+        self.assertTrue(all([False, True, False] == value), value)
 
 
 # vim: sw=4:et:ai

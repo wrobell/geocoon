@@ -114,11 +114,37 @@ META_CURVE.update({
     'is_ring': meta(is_property=True),
 })
 
+
 META_LINE_STRING = META_CURVE.copy()
 META_LINE_STRING.update({
     # 'num_points': meta(is_property=True),
     # 'point_n': meta(returns_geom=True),
 })
 
+
+META_SURFACE = META_GEOMETRY.copy()
+META_SURFACE.update({
+    'area': meta(is_property=True),
+    'centroid': meta(is_property=True, returns_geom=True), # TODO: returns point
+    'point_on_surface': meta(is_property=True, returns_geom=True), # TODO: returns point
+    # 'boundary': override with MultiCurve
+})
+
+
+META_SURFACE = META_GEOMETRY.copy()
+META_SURFACE.update({
+    'area': meta(is_property=True),
+    'centroid': meta(is_property=True, returns_geom=True), # TODO: returns point
+    # 'point_on_surface': meta(is_property=True, returns_geom=True), # TODO: returns point
+    # 'boundary': TODO: override with MultiCurve
+})
+
+
+META_POLYGON = META_SURFACE.copy()
+META_POLYGON.update({
+    'exterior': meta(is_property=True, returns_geom=True), # exterior_ring, TODO: returns LineString
+    # 'num_interior_ring': meta(is_property=True),
+    # 'interiors': meta(is_property=True, returns_geom=True), # # is that interior_ring?, TODO: returns LineString
+})
 
 # vim: sw=4:et:ai

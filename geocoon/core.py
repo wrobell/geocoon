@@ -19,9 +19,9 @@
 
 import pandas
 from functools import partial
-from shapely.geometry import Point, LineString
+from shapely.geometry import Point, LineString, Polygon
 
-from .meta import META_POINT, META_LINE_STRING
+from .meta import META_POINT, META_LINE_STRING, META_POLYGON
  
 #
 # GIS data frame and series definitions
@@ -78,6 +78,13 @@ class LineStringSeries(GeoSeries):
         create = lambda points: LineString((p.x, p.y) for p in points)
         line = points.apply(create)
         return LineStringSeries(line)
+
+
+
+class PolygonSeries(GeoSeries):
+    """
+    GIS polygon series.
+    """
 
 
 
@@ -235,6 +242,7 @@ for m in df_methods:
 # adapt GIS series
 adapt_series(Point, PointSeries, META_POINT)
 adapt_series(LineString, LineStringSeries, META_LINE_STRING)
+adapt_series(Polygon, PolygonSeries, META_POLYGON)
  
 
 # vim: sw=4:et:ai
