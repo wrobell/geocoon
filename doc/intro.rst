@@ -63,13 +63,16 @@ frame with GIS series of points
 the GIS column series access is cheap
 
     >>> data.points
+    0    POINT (1 1)
+    1    POINT (2 2)
+    Name: points, dtype: object
 
 but the following calls are expensive
 
     >>> data.points.x
-    0    POINT (1 1)
-    1    POINT (2 2)
-    Name: points, dtype: object
+    0    1
+    1    2
+    dtype: float64
 
     >>> points.x
     0    1
