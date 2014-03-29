@@ -58,9 +58,6 @@ def as_line_string(series):
     The method works for grouped GIS series - for each grouping key
     a line string is created.
 
-    Use :py:func:`geocoon.from_shapes` to create one line string from
-    all points in a GIS series.
-
     :param series: GIS series.
     """
     get_pt = lambda p: ((p.x, p.y, p.z) if p.has_z else (p.x, p.y))
