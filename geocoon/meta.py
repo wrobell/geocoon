@@ -37,12 +37,24 @@ To update the metadata information of the classes
 
 from collections import namedtuple
 
+from shapely.geometry import Polygon
+
 Meta = namedtuple('Meta', 'first_is_geom returns_geom is_property')
 Meta.__doc__ = """
 Metadata of attribute or method of GIS geometry class.
 
+The `returns_geom` can have the following values
+
+    false
+        Method returns a scalar.
+    true
+        Method returns geometry object of the same class as the owner of
+        the method.
+    class
+        Method returns geometry object of the specified class.
+
 :param first_is_geom: First parameter of method is geometry.
-:param returns_geom: True if method returns a geometry.
+:param returns_geom: Description of object returned by method.
 :param is_property: True if Shapely presents method as property.
 """
 
@@ -86,7 +98,7 @@ META_GEOMETRY = {
 
     ## analysis,
     'distance': meta(first_is_geom=True),
-    'buffer': meta(returns_geom=True),
+    'buffer': meta(returns_geom=Polygon), # in the OGC standard - geometry
     'convex_hull': meta(returns_geom=True),
     'intersection': meta(first_is_geom=True, returns_geom=True),
     'union': meta(first_is_geom=True, returns_geom=True),

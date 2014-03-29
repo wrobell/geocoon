@@ -196,24 +196,42 @@ def adapt_attr(cls, gis, name):
     setattr(cls, name, property(f))
 
  
-def create_series_method(cls, method, first_is_geom):
+def create_series_method(cls, gis, method, meta):
     """
     Create GIS series method to return series of values returned by method
     call on each object in the series.
 
     :param cls: GIS series class.
-    :param method: Method name.
-    :param first_is_geom: True if first parameter is a geometry.
+    :param gis: Shapely geometry class.
+    :param method: Method name to be adapted.
+    :param meta: Method metadata.
+
+    :seealso:: :py:class:`geocoon.meta.Meta`
     """
+    first_is_geom = meta.first_is_geom
+    returns_geom = meta.returns_geom
+
+    # determine series class returned by method
+    # - pandas.Series if returned value is non-geom object
+    # - return the same series if returns_geom is true
+    # - otherwise returns_geom is class - the series class
+    if returns_geom == True:
+        series_cls = cls
+    elif returns_geom == False:
+        series_cls = pandas.Series
+    else:
+        series_cls = MAP_GEOM[meta.returns_geom]
+
+    # Shapely geometry method call to be adapted
+    mcall = getattr(gis, method)
+
     def f_geom(self, other, *args, **kw):
-        mcall = getattr(cls, method)
         data = (mcall(s, o, *args, **kw) for s, o in zip(self, other))
-        return pandas.Series(data, index=self.index)
+        return series_cls(data, index=self.index)
 
     def f_non_geom(self, *args, **kw):
-        mcall = getattr(cls, method)
         data = (mcall(s, *args, **kw) for s in self)
-        return pandas.Series(data, index=self.index)
+        return series_cls(data, index=self.index)
 
     doc = 'Vectorized version of :py:meth:`{}.{}` method.'.format(
         cls.__qualname__, method
@@ -228,12 +246,12 @@ def create_series_method(cls, method, first_is_geom):
     return f
  
  
-def adapt_series(gis, cls, gis_meta):
+def adapt_series(cls, gis, gis_meta):
     """
     Adapt GIS series to return data stored in GIS object.
 
-    :param gis: GIS object class.
     :param cls: GIS series class.
+    :param gis: GIS object class.
     :param gis_meta: GIS object class metadata.
     """
     for name, meta in gis_meta.items():
@@ -241,7 +259,7 @@ def adapt_series(gis, cls, gis_meta):
         if meta.is_property:
             adapt_attr(cls, gis, name)
         else:
-            wrapper = create_series_method(gis, name, meta.first_is_geom)
+            wrapper = create_series_method(cls, gis, name, meta)
             setattr(cls, name, wrapper)
 
 
@@ -256,9 +274,17 @@ for m in df_methods:
     setattr(GeoDataFrame, m, wrap_df_method(mt))
 
 # adapt GIS series
-adapt_series(Point, PointSeries, META_POINT)
-adapt_series(LineString, LineStringSeries, META_LINE_STRING)
-adapt_series(Polygon, PolygonSeries, META_POLYGON)
+
+# geometry to gis series mapping
+MAP_GEOM = {
+    Point: PointSeries,
+    LineString: LineStringSeries,
+    Polygon: PolygonSeries,
+}
+
+adapt_series(PointSeries, Point, META_POINT)
+adapt_series(LineStringSeries, LineString, META_LINE_STRING)
+adapt_series(PolygonSeries, Polygon, META_POLYGON)
  
 
 # vim: sw=4:et:ai

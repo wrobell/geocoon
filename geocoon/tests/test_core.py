@@ -188,6 +188,7 @@ class PointSeriesTestCase(unittest.TestCase):
         series = PointSeries(data)
         value = series.buffer(0.2, resolution=3) # no error? good
         self.assertEquals(3, len(value))
+        self.assertEquals(PolygonSeries, type(value))
 
 
     def test_method_adapt_geom(self):
