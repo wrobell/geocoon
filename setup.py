@@ -32,7 +32,6 @@ setup(
     author='Artur Wroblewski',
     author_email='wrobell@pld-linux.org',
     url='http://wrobell.it-zone.org/geocoon/',
-#    requires = ['shapely >= 1.3', 'pandas >= 0.13.1'],
     setup_requires = ['setuptools_git >= 1.0'],
     packages=find_packages('.'),
     long_description=\
@@ -47,7 +46,7 @@ frames.
     ],
     keywords='gis',
     license='GPL',
-    install_requires=[],
+    install_requires = ['shapely >= 1.3', 'pandas >= 0.13.1'],
     test_suite='nose.collector',
 )
 
