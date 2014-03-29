@@ -91,6 +91,8 @@ class PolygonSeries(GeoSeries):
 class GeoDataFrame(pandas.DataFrame):
     """
     GIS data frame based on Pandas' data frame.
+
+    The `data` parameter has to be a dictionary at the moment.
     """
     def __init__(self, data, *args, **kw):
         """
