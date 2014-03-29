@@ -117,6 +117,9 @@ point::
     1    POLYGON ((2.3 2, 2.259807621135332 1.85, 2.15 ...
     dtype: object
 
+
+Performance Notes
+-----------------
 It is important to remember that the vectorized methods always compute
 values and therefore their calls are expensive. For example, given data
 frame with GIS series of points::
