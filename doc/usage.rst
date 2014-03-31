@@ -120,7 +120,56 @@ another GIS object. For example, to calculate distance between two points::
     dtype: float64
 
 
-Split, Apply, Combine
----------------------
+Split-Apply-Combine
+-------------------
+GeoCoon GIS data frame and GIS series support
+`Pandas split-apply-combine idioms <http://pandas.pydata.org/pandas-docs/stable/groupby.html>`_.
+
+Given the data frame::
+
+    >>> from shapely.geometry import Point
+    >>> import geocoon
+    >>> series = geocoon.PointSeries([Point(1, 1), Point(2, 2), Point(3, 3), Point(4, 4)])
+    >>> data = geocoon.GeoDataFrame({
+    ...     'location': series,
+    ...     'cat': ['a', 'b', 'b', 'a'],
+    ...     'time': [1, 2, 3, 4],
+    ... })
+    >>> data
+      cat     location  time
+    0   a  POINT (1 1)     1
+    1   b  POINT (2 2)     2
+    2   b  POINT (3 3)     3
+    3   a  POINT (4 4)     4
+    <BLANKLINE>
+    [4 rows x 3 columns]
+
+We can split data by category::
+
+    >>> g_data = data.groupby('cat')
+
+Convert points to line string objects::
+
+    >>> routes = geocoon.as_line_string(g_data.location)
+
+Calculate time of first and last points of each line::
+
+    >>> start = g_data.time.first()
+    >>> end = g_data.time.last()
+
+And finally compose the data into a report::
+
+    >>> report = geocoon.GeoDataFrame({
+    ...     'start': start,
+    ...     'end': end,
+    ...     'route': routes,
+    ... })
+    >>> report
+         end                  route  start
+    cat
+    a      4  LINESTRING (1 1, 4 4)      1
+    b      3  LINESTRING (2 2, 3 3)      2
+    <BLANKLINE>
+    [2 rows x 3 columns]
 
 .. vim: sw=4:et:ai
