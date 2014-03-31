@@ -120,10 +120,9 @@ another GIS object. For example, to calculate distance between two points::
     dtype: float64
 
 
-Split-Apply-Combine
--------------------
-GeoCoon GIS data frame and GIS series support
-`Pandas split-apply-combine idioms <http://pandas.pydata.org/pandas-docs/stable/groupby.html>`_.
+Selecting Data
+--------------
+GeoCoon library supports basic Pandas operations for data selection.
 
 Given the data frame::
 
@@ -144,7 +143,32 @@ Given the data frame::
     <BLANKLINE>
     [4 rows x 3 columns]
 
-We can split data by category::
+Select the data for category `a`::
+
+    >>> data[data.cat == 'a']
+      cat     location  time
+    0   a  POINT (1 1)     1
+    3   a  POINT (4 4)     4
+    <BLANKLINE>
+    [2 rows x 3 columns]
+
+Select data for points, which `x` coordinate is greater than `1.5`::
+
+    >>> data[data.location.x > 1.5]
+      cat     location  time
+    1   b  POINT (2 2)     2
+    2   b  POINT (3 3)     3
+    3   a  POINT (4 4)     4
+    <BLANKLINE>
+    [3 rows x 3 columns]
+
+
+Split-Apply-Combine
+-------------------
+GeoCoon GIS data frame and GIS series support
+`Pandas split-apply-combine idioms <http://pandas.pydata.org/pandas-docs/stable/groupby.html>`_.
+
+Given the data frame from pervious section, we can split data by category::
 
     >>> g_data = data.groupby('cat')
 
@@ -166,10 +190,11 @@ And finally compose the data into a report::
     ... })
     >>> report
          end                  route  start
-    cat
+    cat                                   
     a      4  LINESTRING (1 1, 4 4)      1
     b      3  LINESTRING (2 2, 3 3)      2
     <BLANKLINE>
     [2 rows x 3 columns]
+
 
 .. vim: sw=4:et:ai
