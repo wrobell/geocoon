@@ -46,8 +46,7 @@ def from_wkb(wkb, index=None):
     :param wkb: Collection of WKB binary strings.
     :param index: Series index.
     """
-    to_bin = lambda v: v if isinstance(v, bytes) else binascii.unhexlify(v)
-    shapes = (shapely.wkb.loads(to_bin(v)) for v in wkb)
+    shapes = (shapely.wkb.loads(v, isinstance(v, str)) for v in wkb)
     return from_shapes(shapes, index=index)
 
 
