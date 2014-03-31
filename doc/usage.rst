@@ -60,6 +60,24 @@ Creating a GIS data frame and adding a GIS series to the data frame is supported
     [3 rows x 2 columns]
 
 
+SQL/MM Database Access
+~~~~~~~~~~~~~~~~~~~~~~
+GeoCoon supports SQL/MM databases, i.e. PostgreSQL with PostGIS extension.
+To load GIS data frame from SQL database, use :py:func:`geocoon.read_sql`
+function.
+
+For example, to load time series of GPS location data::
+
+    >>> db = psycopg.connect(...) # doctest: +SKIP
+    >>> sql = 'select timestamp, location, speed, heading, error from position' # doctest: +SKIP
+    >>> data = geocoon.read_sql(sql, db, 'location', index_col='timestamp') # doctest: +SKIP
+
+Other Sources of Data
+~~~~~~~~~~~~~~~~~~~~~
+Data from any other source can be converted to GIS series using
+:py:func:`geocoon.from_wkb` function assuming the data is provided or can
+be easily converted into WKB format.
+
 Vectorized Data Access
 ----------------------
 
