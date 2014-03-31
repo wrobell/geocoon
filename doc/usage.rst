@@ -172,7 +172,8 @@ Given the data frame from pervious section, we can split data by category::
 
     >>> g_data = data.groupby('cat')
 
-Convert points to line string objects::
+Convert points to line string objects using
+:py:func:`geocoon.as_line_string` function::
 
     >>> routes = geocoon.as_line_string(g_data.location)
 
