@@ -80,6 +80,45 @@ be easily converted into WKB format.
 
 Vectorized Data Access
 ----------------------
+The need for custom GIS data frames and GIS series pays off with vectorized
+access to GIS data and vectorized GIS methods.
+
+To access point `x` coordinate::
+
+    >>> data.location.x
+    0    1
+    1    2
+    2    3
+    dtype: float64
+
+To calculate buffer of each point::
+
+    >>> pt_buffer = data.location.buffer(0.3)
+    >>> pt_buffer
+    0    POLYGON ((1.3 1, 1.298555418001659 0.970594857...
+    1    POLYGON ((2.3 2, 2.298555418001659 1.970594857...
+    2    POLYGON ((3.3 3, 3.298555418001659 2.970594857...
+    dtype: object
+
+Vectorized methods return GIS series. For example, it is possible to
+calculate area of each buffer of each point::
+
+    >>> pt_buffer.area
+    0    0.282289
+    1    0.282289
+    2    0.282289
+    dtype: float64
+
+The method vectorization works when first parameter of a GIS method is
+another GIS object. For example, to calculate distance between two points::
+
+    >>> points = geocoon.PointSeries([Point(1.1, 1.0), Point(2.2, 2.), Point(3.3, 3.0)])
+    >>> data.location.distance(points)
+    0    0.1
+    1    0.2
+    2    0.3
+    dtype: float64
+
 
 Split, Apply, Combine
 ---------------------
