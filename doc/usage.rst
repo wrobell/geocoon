@@ -1,43 +1,69 @@
-Using GeoCoon
-=============
-Create points
+Using GeoCoon Library
+=====================
 
-.. doctest::
+Creating Data Frame and Series Objects
+--------------------------------------
+To process data with GeoCoon library, it is required to create
+
+* GIS series of point, line string or other GIS objects supported by
+  Shapely library
+* GIS data frame :py:func:`geocoon.GeoDataFrame`
+
+for example::
 
     >>> from shapely.geometry import Point
     >>> import geocoon
-    >>> shapes = Point(1, 1), Point(2, 2)
-    >>> points = geocoon.from_shapes(shapes)
-    >>> points
+    >>> series = geocoon.PointSeries([Point(1, 1), Point(2, 2), Point(3, 3)])
+    >>> series
     0    POINT (1 1)
     1    POINT (2 2)
+    2    POINT (3 3)
     dtype: object
-    >>> points.x
-    0    1
-    1    2
-    dtype: float64
 
-Create data frame
+    >>> data = geocoon.GeoDataFrame({'location': series})
+    >>> data
+          location
+    0  POINT (1 1)
+    1  POINT (2 2)
+    2  POINT (3 3)
+    <BLANKLINE>
+    [3 rows x 1 columns]
 
-.. doctest::
+The mapping of GIS series and Shapely classes is presented in the table
+below
 
-   >>> ends = ['a', 'b']
-   >>> data = geocoon.GeoDataFrame({'point': points, 'end': ends})
-   >>> data
-     end        point
-   0   a  POINT (1 1)
-   1   b  POINT (2 2)
-   <BLANKLINE>
-   [2 rows x 2 columns]
+    =============== ===================
+     Shapely Class    GIS Series Class
+    =============== ===================
+     Point           PointSeries
+     LineString      LineStringSeries
+     Polygon         PolygonSeries
+    =============== ===================
 
-Query a data frame
+*NOTE:*
 
-.. doctest::
+    #. The need for custom GIS series classes is to support different methods
+       implemented by different GIS classes.
+    #. The need for GIS data frame is lack of support for custom Series objects
+       in Pandas library, see `issue 6751 <https://github.com/pydata/pandas/issues/6751>`_.
 
-   >>> data[data.end == 'a']
-     end        point
-   0   a  POINT (1 1)
-   <BLANKLINE>
-   [1 rows x 2 columns]
+Creating a GIS data frame and adding a GIS series to the data frame is supported as well::
+
+    >>> data = geocoon.GeoDataFrame({'time': range(4, 7)})
+    >>> data['location'] = series
+    >>> data
+       time     location
+    0     4  POINT (1 1)
+    1     5  POINT (2 2)
+    2     6  POINT (3 3)
+    <BLANKLINE>
+    [3 rows x 2 columns]
+
+
+Vectorized Data Access
+----------------------
+
+Split, Apply, Combine
+---------------------
 
 .. vim: sw=4:et:ai
