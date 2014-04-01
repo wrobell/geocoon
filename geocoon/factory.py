@@ -59,8 +59,7 @@ def as_line_string(series):
 
     :param series: GIS series.
     """
-    get_pt = lambda p: ((p.x, p.y, p.z) if p.has_z else (p.x, p.y))
-    create = lambda series: shapely.geometry.LineString(get_pt(p) for p in series)
+    create = lambda series: shapely.geometry.LineString(p.coords[0] for p in series)
     if isinstance(series, SeriesGroupBy):
         line = series.apply(create)
         return geocoon.core.LineStringSeries(line)
