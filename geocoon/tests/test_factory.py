@@ -37,9 +37,31 @@ class FactoryTestCase(unittest.TestCase):
         Test GIS series shapes factory (point)
         """
         points = Point(0, 0), Point(1, 0), Point(2, 0)
-        
+
         series = from_shapes(points)
         self.assertEquals(PointSeries, type(series))
+
+
+    def test_from_shapes_cls(self):
+        """
+        Test GIS series shapes factory (enforced class)
+        """
+        points = Point(0, 0), Point(1, 0), Point(2, 0)
+
+        series = from_shapes(points, cls=PointSeries)
+        self.assertEquals(PointSeries, type(series))
+
+
+    def test_from_shapes_unsupported(self):
+        """
+        Test GIS series shapes factory (unsupported)
+
+        Test with any non Shapely class.
+        """
+        class XY(object): pass
+
+        data = XY(), XY(), XY()
+        self.assertRaises(ValueError, from_shapes, data)
 
 
     def test_from_wkb(self):

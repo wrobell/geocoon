@@ -27,16 +27,24 @@ import shapely.geometry
 
 import geocoon.core
  
-def from_shapes(shapes, index=None):
+def from_shapes(shapes, index=None, cls=None):
     """
     Create a GIS series from collection of GIS shapes.
 
+    If GIS series class is not specified, then it is determined from the
+    class of first geometry in the collection.
+
     :param shapes: Collection of shapes.
     :param index: Series index.
+    :param cls: GIS series class.
     """
-    shapes = tuple(shapes)
-    name = shapes[0].__class__.__name__ + 'Series'
-    cls = getattr(geocoon.core, name)
+    if not cls:
+        shapes = tuple(shapes)
+        n = shapes[0].__class__.__name__
+        name = n + 'Series'
+        if not hasattr(geocoon.core, name):
+            raise ValueError('The {} geometry not supported yet'.format(n))
+        cls = getattr(geocoon.core, name)
     return cls(shapes, index=index)
     
 
