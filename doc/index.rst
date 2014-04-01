@@ -26,6 +26,7 @@ Table of Contents
 
    intro
    usage
+   design
    api
    changelog
 
