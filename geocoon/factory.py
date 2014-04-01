@@ -17,12 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import binascii
+from functools import partial
+
 import pandas
 from pandas.core.groupby import SeriesGroupBy
 import shapely.wkb
 import shapely.geometry
-
-import binascii
 
 import geocoon.core
  
@@ -59,13 +60,39 @@ def as_line_string(series):
 
     :param series: GIS series.
     """
-    create = lambda series: shapely.geometry.LineString(p.coords[0] for p in series)
+    cls = shapely.geometry.LineString
     if isinstance(series, SeriesGroupBy):
-        line = series.apply(create)
-        return geocoon.core.LineStringSeries(line)
+        lines = series.apply(partial(_shape_from_coords, shape_cls=cls))
+        return geocoon.core.LineStringSeries(lines)
     else:
-        return create(series)
+        return _shape_from_coords(series, cls)
+
+
+def as_polygon(series):
+    """
+    Create polygon from GIS series.
+
+    The method works for grouped GIS series - for each grouping key
+    a polygon is created.
+
+    :param series: GIS series.
+    """
+    cls = shapely.geometry.Polygon
+    if isinstance(series, SeriesGroupBy):
+        lines = series.apply(partial(_shape_from_coords, shape_cls=cls))
+        return geocoon.core.PolygonSeries(lines)
+    else:
+        return _shape_from_coords(series, cls)
+
+
+def _shape_from_coords(data, shape_cls):
+    """
+    Create shape from a coordinates taken from collection of geometries.
+
+    :param data: Collection of geometries.
+    :param shape_cls: Class of geometry to be created.
+    """
+    return shape_cls(c for g in data for c in g.coords)
 
 
 # vim: sw=4:et:ai
-

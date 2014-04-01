@@ -19,10 +19,12 @@
 
 import binascii
 
-from shapely.geometry import Point, LineString
+from shapely.geometry import Point, LineString, Polygon
 
-from geocoon.factory import from_shapes, from_wkb, as_line_string
-from geocoon.core import GeoDataFrame, PointSeries, LineStringSeries
+from geocoon.factory import from_shapes, from_wkb, as_line_string, \
+    as_polygon
+from geocoon.core import GeoDataFrame, PointSeries, LineStringSeries, \
+    PolygonSeries
 
 import unittest
 
@@ -96,7 +98,6 @@ class LineStringFactoryTestCase(unittest.TestCase):
             ])
         }
         data = GeoDataFrame(data).groupby('device')
-        print(data.location)
         series = as_line_string(data.location)
 
         self.assertTrue(isinstance(series, LineStringSeries))
@@ -125,5 +126,81 @@ class LineStringFactoryTestCase(unittest.TestCase):
         self.assertTrue(isinstance(series, LineStringSeries))
         self.assertEquals(2, len(series))
         self.assertTrue(series[0].has_z)
+
+
+
+class PolygonFactoryTestCase(unittest.TestCase):
+    """
+    GIS polygon series factory tests.
+    """
+
+    def test_polygon_pt(self):
+        """
+        Test creating polygon from series (points 2d)
+        """
+        data = {
+            'device': ['dev1', 'dev1', 'dev2', 'dev2', 'dev2'],
+            'location': PointSeries([
+                Point(1, 11), # dev1
+                Point(1, 13),
+                Point(2, 21), # dev2
+                Point(2, 23),
+                Point(2, 25),
+            ])
+        }
+        data = GeoDataFrame(data)
+        series = as_polygon(data.location)
+
+        self.assertTrue(isinstance(series, Polygon))
+
+
+    def test_grouped_series_pt(self):
+        """
+        Test creating polygon series from grouped series (points 2d)
+        """
+        data = {
+            'device': ['dev1'] * 4 + ['dev2'] * 3,
+            'location': PointSeries([
+                Point(1, 11), # dev1
+                Point(2, 12),
+                Point(1, 13),
+                Point(2, 14),
+                Point(2, 21), # dev2
+                Point(1, 23),
+                Point(2, 25),
+            ])
+        }
+        data = GeoDataFrame(data).groupby('device')
+        series = as_polygon(data.location)
+
+        self.assertTrue(isinstance(series, PolygonSeries))
+        self.assertEquals(2, len(series))
+        self.assertAlmostEquals(7.4049, series[0].length, 4) # dev1
+        self.assertAlmostEquals(8.472, series[1].length, 3) # dev2
+
+
+    def test_grouped_series_pt_3d(self):
+        """
+        Test creating polygon string series from grouped series (points 3d)
+        """
+        data = {
+            'device': ['dev1'] * 4 + ['dev2'] * 3,
+            'location': PointSeries([
+                Point(1, 11, 111), # dev1
+                Point(2, 12, 112),
+                Point(1, 13, 113),
+                Point(2, 14, 114),
+                Point(2, 21, 211), # dev2
+                Point(1, 23, 212),
+                Point(2, 25, 213),
+            ])
+        }
+        data = GeoDataFrame(data).groupby('device')
+        series = as_polygon(data.location)
+
+        self.assertTrue(isinstance(series, PolygonSeries))
+        self.assertEquals(2, len(series))
+        self.assertTrue(series[0].has_z)
+
 
 # vim: sw=4:et:ai
