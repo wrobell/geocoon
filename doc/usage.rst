@@ -7,9 +7,9 @@ To process data with GeoCoon library, it is required to create
 
 * GIS series of point, line string or other GIS objects supported by
   Shapely library
-* GIS data frame :py:func:`geocoon.GeoDataFrame`
+* GIS data frame
 
-for example::
+For example, to process point geometries::
 
     >>> from shapely.geometry import Point
     >>> import geocoon
@@ -29,8 +29,8 @@ for example::
     <BLANKLINE>
     [3 rows x 1 columns]
 
-The mapping of GIS series and Shapely classes is presented in the table
-below
+GeoCoon supports various Shapely geometries with GIS series classes. The
+mapping of Shapely classes and GIS series is presented in the table below
 
     =============== ===================
      Shapely Class    GIS Series Class
@@ -40,7 +40,7 @@ below
      Polygon         PolygonSeries
     =============== ===================
 
-Creating a GIS data frame and adding a GIS series to the data frame is supported as well::
+Adding GIS series to exisint data frame is supported as well::
 
     >>> data = geocoon.GeoDataFrame({'time': range(4, 7)})
     >>> data['location'] = series
@@ -73,8 +73,9 @@ be easily converted into WKB format.
 
 Vectorized Data Access
 ----------------------
-The need for custom GIS data frames and GIS series pays off with vectorized
-access to GIS data and vectorized GIS methods.
+The purpose of GIS series classes is to provide vectorized access to
+attributes and vectorized method calls - the attributes and methods mimic
+Shapely geometries API.
 
 To access point `x` coordinate::
 
@@ -93,7 +94,7 @@ To calculate buffer of each point::
     2    POLYGON ((3.3 3, 3.298555418001659 2.970594857...
     dtype: object
 
-Vectorized methods return GIS series. For example, it is possible to
+Vectorized methods can return GIS series. For example, it is possible to
 calculate area of each buffer of each point::
 
     >>> pt_buffer.area
@@ -168,7 +169,7 @@ Given the data frame from pervious section, we can split data by category::
 Convert points to line string objects using
 :py:func:`geocoon.as_line_string` function::
 
-    >>> routes = geocoon.as_line_string(g_data.location)
+    >>> route = geocoon.as_line_string(g_data.location)
 
 Calculate time of first and last points of each line::
 
@@ -177,16 +178,15 @@ Calculate time of first and last points of each line::
 
 And finally compose the data into a report::
 
-    >>> report = geocoon.GeoDataFrame({
-    ...     'start': start,
-    ...     'end': end,
-    ...     'route': routes,
-    ... })
+    >>> report = geocoon.GeoDataFrame({})
+    >>> report['start'] = start
+    >>> report['end'] = end
+    >>> report['length'] = route.length
     >>> report
-         end                  route  start
-    cat                                   
-    a      4  LINESTRING (1 1, 4 4)      1
-    b      3  LINESTRING (2 2, 3 3)      2
+         start  end    length
+    cat                      
+    a        1    4  4.242641
+    b        2    3  1.414214
     <BLANKLINE>
     [2 rows x 3 columns]
 
