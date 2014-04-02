@@ -4,9 +4,6 @@ Data Model
 ----------
 The GeoCoon data model and its context is shown on the diagram below.
 
-The GeoCoon follows Pandas model. GIS data frame inherits from Pandas data
-frame and contains multiple series and GIS series columns.
-
 .. code::
    :class: diagram
 
@@ -19,15 +16,28 @@ frame and contains multiple series and GIS series columns.
    +--------------+              +--------------+      |
    | GeoDataFrame |------------->| <<abstract>> |<-.-.-.
    +--------------+         1..* |  GeoSeries   |
-                                +--------------+
-                                       |
-                                       |
-                                       | 0..*
-                                      \|/
-                       +---------------------------------+
-                       | shapely::geometry::BaseGeometry |
-                       +---------------------------------+
+                                 +--------------+
+                                        |
+                                        |
+                                        | 0..*
+                                       \|/
+                        +---------------------------------+
+                        | shapely::geometry::BaseGeometry |
+                        +---------------------------------+
 
+The GeoCoon follows Pandas model. GIS data frame inherits from Pandas data
+frame and contains multiple series and GIS series columns.
+
+The rationale behind each of the classes is as follows
+
+#. Pandas data frame lacks support for custom Series objects (see
+   `issue 6751 <https://github.com/pydata/pandas/issues/6751>`_). The
+   custom data frame class - GeoDataFrame - is required to support GIS
+   series and Pandas operations like data selection and grouping, so the
+   type information of columns being GIS series is not lost.
+#. The custom series classes - based on GeoSeries class - are required to
+   support vectorized versions of attribute access and method calls
+   mimicking those provided by Shapely GIS geometries.
 
 The GIS series contain a collection of Shapely geometries. GIS series
 classes implement vectorized methods, which mimic Shapely geometries API.

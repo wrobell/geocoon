@@ -40,13 +40,6 @@ below
      Polygon         PolygonSeries
     =============== ===================
 
-*NOTE:*
-
-    #. The need for custom GIS series classes is to support different methods
-       implemented by different GIS classes.
-    #. The need for GIS data frame is lack of support for custom Series objects
-       in Pandas library, see `issue 6751 <https://github.com/pydata/pandas/issues/6751>`_.
-
 Creating a GIS data frame and adding a GIS series to the data frame is supported as well::
 
     >>> data = geocoon.GeoDataFrame({'time': range(4, 7)})
