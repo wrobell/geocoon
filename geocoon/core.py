@@ -17,11 +17,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import pandas
 from functools import partial
+import logging
+
+import pandas
 from shapely.geometry import Point, LineString, Polygon
 
 from .meta import META_POINT, META_LINE_STRING, META_POLYGON
+
+logger = logging.getLogger(__name__)
+
  
 #
 # GIS data frame and series definitions
@@ -96,6 +101,8 @@ class GeoDataFrame(pandas.DataFrame):
             for k, col in data.items():
                 if isinstance(col, GeoSeries):
                     self._geom_columns[k] = type(col)
+        else:
+            logger.warn('Non-dictionary data argument, cannot detect GIS data')
 
 
     def __setitem__(self, key, value):
