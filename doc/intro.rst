@@ -20,8 +20,10 @@ GeoCoon supports
 
 Quick Start
 -----------
-To quickly start with GeoCoon data structrues from GeoCoon package and
-Shapely geometries::
+Start processing GIS data with GeoCoon import data frame, relevant series
+and Shapely geometry classes.
+
+For example, to process point data::
 
    >>> from geocoon import GeoDataFrame, PointSeries
    >>> from shapely.geometry import Point
@@ -44,7 +46,12 @@ Create GIS data frame::
     <BLANKLINE>
     [2 rows x 2 columns]
 
-or::
+*NOTE:*
+
+    *GeoDataFrame constructor works with GIS series when data is provided
+    via dictionary like above.*
+
+Or add new column to existing GIS data frame::
 
     >>> data = GeoDataFrame({'classifier': ['a', 'b']})
     >>> data['points'] = points
@@ -55,10 +62,7 @@ or::
     <BLANKLINE>
     [2 rows x 2 columns]
 
-*NOTE:* GeoDataFrame constructor works with GIS series only when data is
-provided via dictionary.
-
-Access point `x` coordinate::
+Access `x` coordinate of each point::
 
     >>> points.x
     0    1
