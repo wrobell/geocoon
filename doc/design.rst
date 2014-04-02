@@ -29,7 +29,7 @@ frame and contains multiple series and GIS series columns.
                        +---------------------------------+
 
 
-The GIS series contain a collection of Shapely geometries. Gis series
+The GIS series contain a collection of Shapely geometries. GIS series
 classes implement vectorized methods, which mimic Shapely geometries API.
 The methods return Pandas series objects or even GIS series if Shapely
 geometry computes other geometry.
