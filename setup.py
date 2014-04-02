@@ -40,6 +40,7 @@ GeoCoon - library to integrate Shapely GIS geometries with Pandas data
 frames.
 """,
     classifiers=[
+        'Topic :: Scientific/Engineering :: GIS',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)'
         'Programming Language :: Python :: 3',
         'Development Status :: 4 - Beta',
