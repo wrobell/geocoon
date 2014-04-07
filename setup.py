@@ -23,11 +23,9 @@ import os.path
 
 from setuptools import setup, find_packages
 
-import geocoon
-
 setup(
     name='geocoon',
-    version=geocoon.__version__,
+    version='0.1.0',
     description='GeoCoon - library to integrate Shapely GIS geometries with Pandas data frames',
     author='Artur Wroblewski',
     author_email='wrobell@pld-linux.org',
