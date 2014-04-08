@@ -6,7 +6,7 @@ To install GeoCoon use `pip`::
 
     pip install --user geocoon
 
-GeoCoon requires Shapely 1.3.0, Pandas 0.13.0 and Python 3.
+GeoCoon requires Shapely 1.3.0, Pandas 0.13.0 and Python 3.3 or later.
 
 Features
 --------
