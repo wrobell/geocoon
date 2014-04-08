@@ -45,8 +45,7 @@ frames.
     ],
     keywords='gis',
     license='GPL',
-    install_requires = ['shapely >= 1.3', 'pandas >= 0.13.1'],
-    test_suite='nose.collector',
+    install_requires = ['shapely >= 1.3', 'pandas >= 0.13.1']
 )
 
 # vim: sw=4:et:ai
