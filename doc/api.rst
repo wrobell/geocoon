@@ -25,6 +25,7 @@ API
    :members:
 
 .. autofunction:: geocoon.as_line_string
+.. autofunction:: geocoon.as_polygon
 .. autofunction:: geocoon.read_sql
 .. autofunction:: geocoon.from_shapes
 .. autofunction:: geocoon.from_wkb
