@@ -40,7 +40,7 @@ mapping of Shapely classes and GIS series is presented in the table below
      Polygon         PolygonSeries
     =============== ===================
 
-Adding GIS series to exisint data frame is supported as well::
+Adding GIS series to exisiting data frame is supported as well::
 
     >>> data = geocoon.GeoDataFrame({'time': range(4, 7)})
     >>> data['location'] = series
@@ -106,7 +106,7 @@ calculate area of each buffer of each point::
 The method vectorization works when first parameter of a GIS method is
 another GIS object. For example, to calculate distance between two points::
 
-    >>> points = geocoon.PointSeries([Point(1.1, 1.0), Point(2.2, 2.), Point(3.3, 3.0)])
+    >>> points = geocoon.PointSeries([Point(1.1, 1.0), Point(2.2, 2.0), Point(3.3, 3.0)])
     >>> data.location.distance(points)
     0    0.1
     1    0.2

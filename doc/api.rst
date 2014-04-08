@@ -7,6 +7,7 @@ API
    geocoon.LineStringSeries
    geocoon.PolygonSeries
    geocoon.as_line_string
+   geocoon.as_polygon
    geocoon.read_sql
    geocoon.from_shapes
    geocoon.from_wkb
