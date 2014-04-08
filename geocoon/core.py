@@ -17,6 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+"""
+GeoCoon GeoDataFrame class and GIS series classes.
+
+The module performs mapping between GIS series classes and Shapely
+geometries.
+"""
+
 from functools import partial
 import logging
 
@@ -225,7 +232,7 @@ def create_series_method(cls, gis, method, meta):
         return series_cls(data, index=self.index)
 
     doc = 'Vectorized version of :py:meth:`{}.{}` method.'.format(
-        cls.__qualname__, method
+        gis.__qualname__, method
     )
     if first_is_geom:
         f = f_geom
