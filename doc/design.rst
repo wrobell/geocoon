@@ -7,23 +7,23 @@ The GeoCoon data model and its context is shown on the diagram below.
 .. code::
    :class: diagram
 
-   +-------------------+       +----------------+
-   | pandas::DataFrame |------>| pandas::Series |.-.-.-.
-   +-------------------+       +----------------+      |
-          /_\                         /_\              .
-           |                           |               | <<derive>>
-           |                           |               .
-   +--------------+              +--------------+      |
-   | GeoDataFrame |------------->| <<abstract>> |<-.-.-.
-   +--------------+         1..* |  GeoSeries   |
-                                 +--------------+
-                                        |
-                                        |
-                                        | 0..*
-                                       \|/
-                        +---------------------------------+
-                        | shapely::geometry::BaseGeometry |
-                        +---------------------------------+
+   +-------------------+     0..* +----------------+
+   | pandas::DataFrame |--------->| pandas::Series |.-.-.-.
+   +-------------------+          +----------------+      |
+          /_\                            /_\              .
+           |                              |               | <<derive>>
+           |                              |               .
+   +--------------+                 +--------------+      |
+   | GeoDataFrame |                 | <<abstract>> |<-.-.-.
+   +--------------+                 |  GeoSeries   |
+                                    +--------------+
+                                           |
+                                           |
+                                           | 0..*
+                                          \|/
+                           +---------------------------------+
+                           | shapely::geometry::BaseGeometry |
+                           +---------------------------------+
 
 The GeoCoon follows Pandas model. GIS data frame inherits from Pandas data
 frame and contains multiple series and GIS series columns.
