@@ -45,10 +45,10 @@ class SQLTestCase(unittest.TestCase):
 
         result = read_sql('query', 'con', geom_col='a')
 
-        self.assertEquals(PointSeries, type(result.a))
-        self.assertEquals(Point, type(result.a[0]))
+        self.assertEqual(PointSeries, type(result.a))
+        self.assertEqual(Point, type(result.a[0]))
 
-        self.assertEquals(3, len(result.index))
+        self.assertEqual(3, len(result.index))
         self.assertTrue(all([1, 2, 3] == result.a.x))
         self.assertTrue(all([1, 2, 3] == result.a.y))
 

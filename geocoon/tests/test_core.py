@@ -43,7 +43,7 @@ class GeoDataFrameTestCase(unittest.TestCase):
         series = PointSeries(data)
 
         df = GeoDataFrame({'a': series})
-        self.assertEquals(PointSeries, type(df.a))
+        self.assertEqual(PointSeries, type(df.a))
 
 
     def test_assign_new_col(self):
@@ -55,7 +55,7 @@ class GeoDataFrameTestCase(unittest.TestCase):
 
         df = GeoDataFrame({})
         df['a'] = series
-        self.assertEquals(PointSeries, type(df.a))
+        self.assertEqual(PointSeries, type(df.a))
 
 
     def test_grouping(self):
@@ -74,12 +74,12 @@ class GeoDataFrameTestCase(unittest.TestCase):
         gdf = df.groupby('b')
 
         df = gdf.get_group(4)
-        self.assertEquals(PointSeries, type(df.a))
+        self.assertEqual(PointSeries, type(df.a))
         self.assertTrue(all([0, 3] == df.a.x))
         self.assertTrue(all([0, 6] == df.a.y))
 
         df = gdf.get_group(5)
-        self.assertEquals(PointSeries, type(df.a))
+        self.assertEqual(PointSeries, type(df.a))
         self.assertTrue(all([1, 2, 4] == df.a.x))
         self.assertTrue(all([2, 4, 8] == df.a.y))
 
@@ -97,7 +97,7 @@ class GeoDataFrameTestCase(unittest.TestCase):
         }
         df = GeoDataFrame(data)
         df = df[df.b == 4]
-        self.assertEquals(PointSeries, type(df.a))
+        self.assertEqual(PointSeries, type(df.a))
         self.assertTrue(all([4] * 2 == df.b))
 
 
@@ -112,7 +112,7 @@ class GeoSeriesTestCase(unittest.TestCase):
         """
         data = [Point(v, v * 2) for v in [1, 2]]
         series = PointSeries(data)
-        self.assertEquals(PointSeries, type(series))
+        self.assertEqual(PointSeries, type(series))
 
 
     def test_fetch_attr(self):
@@ -134,7 +134,7 @@ class GeoSeriesTestCase(unittest.TestCase):
 
         sub = series[(series.x < 4) & (series.y > 2)]
 
-        self.assertEquals(PointSeries, type(sub))
+        self.assertEqual(PointSeries, type(sub))
         self.assertTrue(all([2, 3] == sub.x))
         self.assertTrue(all([4, 6] == sub.y))
 
@@ -147,7 +147,7 @@ class GeoSeriesTestCase(unittest.TestCase):
         series = PointSeries(data)
 
         p = series[1]
-        self.assertEquals(Point, type(p))
+        self.assertEqual(Point, type(p))
 
 
     def test_slice(self):
@@ -159,7 +159,7 @@ class GeoSeriesTestCase(unittest.TestCase):
 
         sub = series[:3]
 
-        self.assertEquals(PointSeries, type(sub))
+        self.assertEqual(PointSeries, type(sub))
         self.assertTrue(all([1, 2, 3] == sub.x))
         self.assertTrue(all([2, 4, 6] == sub.y))
 
@@ -177,7 +177,7 @@ class PointSeriesTestCase(unittest.TestCase):
         attrs = (k for k, v in META_POINT.items() if v.is_property)
         for attr in attrs:
             value = getattr(series, attr) # no error? good
-            self.assertEquals(3, len(value))
+            self.assertEqual(3, len(value))
 
 
     def test_method_adapt_buffer(self):
@@ -187,8 +187,8 @@ class PointSeriesTestCase(unittest.TestCase):
         data = [Point(v, v * 2, v * 3) for v in [5, 2, 4]]
         series = PointSeries(data)
         value = series.buffer(0.2, resolution=3) # no error? good
-        self.assertEquals(3, len(value))
-        self.assertEquals(PolygonSeries, type(value))
+        self.assertEqual(3, len(value))
+        self.assertEqual(PolygonSeries, type(value))
 
 
     def test_method_adapt_geom(self):
@@ -203,7 +203,7 @@ class PointSeriesTestCase(unittest.TestCase):
         for method in methods:
             mcall = getattr(s1, method) # no error? good
             value = mcall(s2)
-            self.assertEquals(3, len(value))
+            self.assertEqual(3, len(value))
             self.assertTrue(all(not callable(v) for v in value))
 
         # just in case
@@ -233,7 +233,7 @@ class LineStringSeriesTestCase(unittest.TestCase):
         attrs = (k for k, v in META_LINE_STRING.items() if v.is_property)
         for attr in attrs:
             value = getattr(series, attr) # no error? good
-            self.assertEquals(3, len(value))
+            self.assertEqual(3, len(value))
             self.assertTrue(all(not callable(v) for v in value))
 
 
@@ -258,7 +258,7 @@ class LineStringSeriesTestCase(unittest.TestCase):
         for method in methods:
             mcall = getattr(s1, method) # no error? good
             value = mcall(s2)
-            self.assertEquals(3, len(value))
+            self.assertEqual(3, len(value))
             self.assertTrue(all(not callable(v) for v in value))
 
 
@@ -277,7 +277,7 @@ class PolygonSeriesTestCase(unittest.TestCase):
         attrs = (k for k, v in META_POLYGON.items() if v.is_property)
         for attr in attrs:
             value = getattr(series, attr) # no error? good
-            self.assertEquals(3, len(value))
+            self.assertEqual(3, len(value))
 
 
     def test_method_adapt_buffer(self):
@@ -288,7 +288,7 @@ class PolygonSeriesTestCase(unittest.TestCase):
         data = [poly(v) for v in [5, 2, 4]]
         series = PolygonSeries(data)
         value = series.buffer(0.2, resolution=3) # no error? good
-        self.assertEquals(3, len(value))
+        self.assertEqual(3, len(value))
 
 
     def test_method_adapt_geom(self):
@@ -304,7 +304,7 @@ class PolygonSeriesTestCase(unittest.TestCase):
         for method in methods:
             mcall = getattr(s1, method) # no error? good
             value = mcall(s2)
-            self.assertEquals(3, len(value))
+            self.assertEqual(3, len(value))
             self.assertTrue(all(not callable(v) for v in value))
 
         # just in case

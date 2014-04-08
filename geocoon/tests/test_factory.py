@@ -39,7 +39,7 @@ class FactoryTestCase(unittest.TestCase):
         points = Point(0, 0), Point(1, 0), Point(2, 0)
 
         series = from_shapes(points)
-        self.assertEquals(PointSeries, type(series))
+        self.assertEqual(PointSeries, type(series))
 
 
     def test_from_shapes_cls(self):
@@ -49,7 +49,7 @@ class FactoryTestCase(unittest.TestCase):
         points = Point(0, 0), Point(1, 0), Point(2, 0)
 
         series = from_shapes(points, cls=PointSeries)
-        self.assertEquals(PointSeries, type(series))
+        self.assertEqual(PointSeries, type(series))
 
 
     def test_from_shapes_unsupported(self):
@@ -76,7 +76,7 @@ class FactoryTestCase(unittest.TestCase):
         ]
 
         series = from_wkb(points)
-        self.assertEquals(PointSeries, type(series))
+        self.assertEqual(PointSeries, type(series))
 
 
 
@@ -123,9 +123,9 @@ class LineStringFactoryTestCase(unittest.TestCase):
         series = as_line_string(data.location)
 
         self.assertTrue(isinstance(series, LineStringSeries))
-        self.assertEquals(2, len(series))
-        self.assertEquals(2, series[0].length) # dev1
-        self.assertEquals(4, series[1].length) # dev2
+        self.assertEqual(2, len(series))
+        self.assertEqual(2, series[0].length) # dev1
+        self.assertEqual(4, series[1].length) # dev2
 
 
     def test_grouped_series_pt_3d(self):
@@ -146,7 +146,7 @@ class LineStringFactoryTestCase(unittest.TestCase):
         series = as_line_string(data.location)
 
         self.assertTrue(isinstance(series, LineStringSeries))
-        self.assertEquals(2, len(series))
+        self.assertEqual(2, len(series))
         self.assertTrue(series[0].has_z)
 
 
@@ -196,9 +196,9 @@ class PolygonFactoryTestCase(unittest.TestCase):
         series = as_polygon(data.location)
 
         self.assertTrue(isinstance(series, PolygonSeries))
-        self.assertEquals(2, len(series))
-        self.assertAlmostEquals(7.4049, series[0].length, 4) # dev1
-        self.assertAlmostEquals(8.472, series[1].length, 3) # dev2
+        self.assertEqual(2, len(series))
+        self.assertAlmostEqual(7.4049, series[0].length, 4) # dev1
+        self.assertAlmostEqual(8.472, series[1].length, 3) # dev2
 
 
     def test_grouped_series_pt_3d(self):
@@ -221,7 +221,7 @@ class PolygonFactoryTestCase(unittest.TestCase):
         series = as_polygon(data.location)
 
         self.assertTrue(isinstance(series, PolygonSeries))
-        self.assertEquals(2, len(series))
+        self.assertEqual(2, len(series))
         self.assertTrue(series[0].has_z)
 
 
