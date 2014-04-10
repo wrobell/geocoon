@@ -2,7 +2,7 @@ Introduction
 ============
 Installation
 ------------
-To install GeoCoon use `pip`::
+To install GeoCoon use `pip <http://www.pip-installer.org/>`_::
 
     pip install --user geocoon
 

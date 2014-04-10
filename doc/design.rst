@@ -69,30 +69,9 @@ point::
 Performance Notes
 -----------------
 It is important to remember that the vectorized methods always compute
-values and therefore their calls are expensive. For example, given data
-frame with GIS series of points::
-
-    >>> from geocoon import GeoDataFrame
-    >>> data = GeoDataFrame({'points': points})
-
-the GIS column series access is cheap::
-
-    >>> data.points
-    0    POINT (1 1)
-    1    POINT (2 2)
-    Name: points, dtype: object
-
-but the following calls are expensive::
-
-    >>> data.points.x
-    0    1
-    1    2
-    dtype: float64
-
-    >>> points.x
-    0    1
-    1    2
-    dtype: float64
+values and therefore their calls are expensive. For example, given GIS data
+frame `data` with GIS series of points `data.points`, the `data.points`
+attribute access is cheap, but `data.points.x` is expensive.
 
 This might be optimized in the future.
 
