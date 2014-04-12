@@ -26,7 +26,11 @@ from setuptools import setup, find_packages
 setup(
     name='geocoon',
     version='0.1.0',
-    description='GeoCoon - library to integrate Shapely GIS geometries with Pandas data frames',
+    description='GIS data analysis library based on Pandas and Shapely',
+    long_description="""\
+GeoCoon is GIS data analysis Python library, which integrates Pandas data
+frames with Shapely GIS geometries.
+"""
     author='Artur Wroblewski',
     author_email='wrobell@pld-linux.org',
     url='http://wrobell.it-zone.org/geocoon/',

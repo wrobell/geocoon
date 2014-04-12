@@ -4,8 +4,8 @@
    | `Bugs <https://github.com/wrobell/geocoon/issues>`_
    | `Source Code <https://github.com/wrobell/geocoon>`_
 
-GeoCoon is a library to integrate Shapely GIS geometries with Pandas data
-frames.
+GeoCoon is GIS data analysis Python library, which integrates Pandas data
+frames with Shapely GIS geometries.
 
 The software is distributed under GPL v3 licence.
 
