@@ -13,8 +13,14 @@ GeoCoon library supports
 #. Point, line string and polygon geometries (more to come).
 #. Vectorized GIS object attribute access and method execution.
 #. Pandas data selection and split-apply-combine idioms.
-#. SQL/MM databases, i.e. PostgreSQL + Postgis.
+#. SQL/MM databases, i.e. `PostgreSQL <http://www.postgresql.org/>`_ with
+   `PostGIS <http://postgis.org/>`_ extension.
 #. Multiple geometry columns in a data frame.
+
+The library API is driven by
+`Simple Feature Access OGC standard <http://www.opengeospatial.org/standards/sfa>`_
+and `Shapely API <http://toblerity.org/shapely/manual.html>`_, which design
+is guided by OGC standard as well.
 
 Installation
 ------------
