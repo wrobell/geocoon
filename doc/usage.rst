@@ -3,13 +3,26 @@ Using GeoCoon Library
 
 Creating Data Frame and Series Objects
 --------------------------------------
-To process data with GeoCoon library, it is required to create
+To analyze GIS data with GeoCoon library, it is required to create GIS data
+frame and GIS series objects
 
-* GIS series of point, line string or other GIS objects supported by
-  Shapely library
-* GIS data frame
+* GIS series object is a collection of point, line string or other GIS
+  objects supported by Shapely library
+* GIS data frame references GIS series objects and enables programmer to
+  analyze the data
 
-For example, to process point geometries::
+GeoCoon supports various Shapely geometries. The mapping of Shapely classes
+and GIS series is presented in the table below
+
+    =============== ===================
+     Shapely Class    GIS Series Class
+    =============== ===================
+     Point           PointSeries
+     LineString      LineStringSeries
+     Polygon         PolygonSeries
+    =============== ===================
+
+For example, to process point geometries, we create point series object::
 
     >>> from shapely.geometry import Point
     >>> import geocoon
@@ -20,6 +33,8 @@ For example, to process point geometries::
     2    POINT (3 3)
     dtype: object
 
+and GIS data frame containing the point series object::
+
     >>> data = geocoon.GeoDataFrame({'location': series})
     >>> data
           location
@@ -28,17 +43,6 @@ For example, to process point geometries::
     2  POINT (3 3)
     <BLANKLINE>
     [3 rows x 1 columns]
-
-GeoCoon supports various Shapely geometries with GIS series classes. The
-mapping of Shapely classes and GIS series is presented in the table below
-
-    =============== ===================
-     Shapely Class    GIS Series Class
-    =============== ===================
-     Point           PointSeries
-     LineString      LineStringSeries
-     Polygon         PolygonSeries
-    =============== ===================
 
 Adding GIS series to exisiting data frame is supported as well::
 
@@ -55,11 +59,29 @@ Adding GIS series to exisiting data frame is supported as well::
 
 SQL/MM Database Access
 ~~~~~~~~~~~~~~~~~~~~~~
-GeoCoon supports SQL/MM databases, i.e. PostgreSQL with PostGIS extension.
-To load GIS data frame from SQL database, use :py:func:`geocoon.read_sql`
-function.
+GeoCoon allows to load GIS data from SQL/MM databases like
+`PostgreSQL <http://www.postgresql.org/>`_ with
+`PostGIS <http://postgis.org/>`_ extension.
 
-For example, to load time series of GPS location data::
+Data stored in SQL/MM database can be retrieved as a GIS data frame using
+:py:func:`geocoon.read_sql` function.
+
+For example, we might need to analyze GPS positions data as a time series
+data.
+
+Given the SQL table definition::
+
+    create table position (
+        timestamp timestamp,
+        heading float,
+        speed float,
+        error float,
+        primary key (timestamp)
+    );
+
+    select AddGeometryColumn('position', 'location', 4326, 'POINT', 3);
+
+We can fetch the data as GIS data frame with time series index::
 
     >>> db = psycopg.connect(...) # doctest: +SKIP
     >>> sql = 'select timestamp, location, speed, heading, error from position' # doctest: +SKIP
@@ -67,9 +89,9 @@ For example, to load time series of GPS location data::
 
 Other Sources of Data
 ~~~~~~~~~~~~~~~~~~~~~
-Data from any other source can be converted to GIS series using
-:py:func:`geocoon.from_wkb` function assuming the data is provided or can
-be easily converted into WKB format.
+Having any source of GIS data, GeoCoon allows to convert a collection of
+geometries stored in WKB format into a GIS series using
+:py:func:`geocoon.from_wkb` function.
 
 Vectorized Data Access
 ----------------------
