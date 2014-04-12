@@ -36,11 +36,6 @@ frames with Shapely GIS geometries.
     url='http://wrobell.it-zone.org/geocoon/',
     setup_requires = ['setuptools_git >= 1.0'],
     packages=find_packages('.'),
-    long_description=\
-"""\
-GeoCoon - GIS data analysis library based on Pandas and Shapely
-frames.
-""",
     classifiers=[
         'Topic :: Scientific/Engineering :: GIS',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)'
