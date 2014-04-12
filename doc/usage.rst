@@ -99,7 +99,8 @@ The purpose of GIS series classes is to provide vectorized access to
 attributes and vectorized method calls - the attributes and methods mimic
 Shapely geometries API.
 
-To access point `x` coordinate::
+Using the GIS data frame example from previous section, to access point `x`
+coordinate::
 
     >>> data.location.x
     0    1
@@ -107,7 +108,7 @@ To access point `x` coordinate::
     2    3
     dtype: float64
 
-To calculate buffer of each point::
+We can calculate buffer of each point::
 
     >>> pt_buffer = data.location.buffer(0.3)
     >>> pt_buffer
@@ -116,8 +117,8 @@ To calculate buffer of each point::
     2    POLYGON ((3.3 3, 3.298555418001659 2.970594857...
     dtype: object
 
-Vectorized methods can return GIS series. For example, it is possible to
-calculate area of each buffer of each point::
+As in the buffer example above, the vectorized methods can return GIS
+series. Having buffer of each point, it is possible to calculate its area::
 
     >>> pt_buffer.area
     0    0.282289
