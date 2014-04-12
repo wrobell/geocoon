@@ -17,7 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import binascii
+"""
+GIS series factory functions to create objects from Shapely geometries and
+WKB data.
+"""
+
 from functools import partial
 
 import pandas
