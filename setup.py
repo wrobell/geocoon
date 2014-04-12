@@ -30,7 +30,7 @@ setup(
     long_description="""\
 GeoCoon is GIS data analysis Python library, which integrates Pandas data
 frames with Shapely GIS geometries.
-"""
+""",
     author='Artur Wroblewski',
     author_email='wrobell@pld-linux.org',
     url='http://wrobell.it-zone.org/geocoon/',
