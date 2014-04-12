@@ -35,11 +35,11 @@ The rationale behind each of the classes is as follows
    custom data frame class - GeoDataFrame - is required to support GIS
    series and Pandas operations like data selection and grouping, so the
    type information of columns being GIS series is not lost.
-#. The custom series classes - based on GeoSeries class - are required to
-   support vectorized versions of attribute access and method calls
-   mimicking those provided by Shapely GIS geometries.
+#. The custom series classes, starting with abstract GeoSeries class, are
+   required to support vectorized versions of attribute access and method
+   calls mimicking those provided by Shapely GIS geometries.
 
-The GIS series contain a collection of Shapely geometries. GIS series
+GIS series object contains a collection of Shapely geometries. GIS series
 classes implement vectorized methods, which mimic Shapely geometries API.
 The methods return Pandas series objects or even GIS series if Shapely
 geometry computes other geometry.
