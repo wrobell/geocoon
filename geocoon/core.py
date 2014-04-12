@@ -1,5 +1,5 @@
 #
-# GeoCoon - library to integrate Shapely GIS geometries with Pandas data frames
+# GeoCoon - GIS data analysis library based on Pandas and Shapely
 #
 # Copyright (C) 2014 by Artur Wroblewski <wrobell@pld-linux.org>
 #

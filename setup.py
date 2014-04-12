@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# GeoCoon - library to integrate Shapely GIS geometries with Pandas data frames
+# GeoCoon - GIS data analysis library based on Pandas and Shapely
 #
 # Copyright (C) 2013 by Artur Wroblewski <wrobell@pld-linux.org>
 #
@@ -38,7 +38,7 @@ frames with Shapely GIS geometries.
     packages=find_packages('.'),
     long_description=\
 """\
-GeoCoon - library to integrate Shapely GIS geometries with Pandas data
+GeoCoon - GIS data analysis library based on Pandas and Shapely
 frames.
 """,
     classifiers=[
