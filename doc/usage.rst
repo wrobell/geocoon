@@ -182,24 +182,29 @@ Select data for points, which `x` coordinate is greater than `1.5`::
 
 Split-Apply-Combine
 -------------------
-GeoCoon GIS data frame and GIS series support
-`Pandas split-apply-combine idioms <http://pandas.pydata.org/pandas-docs/stable/groupby.html>`_.
+`Pandas split-apply-combine idioms <http://pandas.pydata.org/pandas-docs/stable/groupby.html>`_
+allow to split data into various groups and analyze data within each group.
+GeoCoon library integrates these Pandas operations.
 
-Given the data frame from pervious section, we can split data by category::
+The example below uses GIS data frame from previos section.
+
+We can split data by category::
 
     >>> g_data = data.groupby('cat')
 
-Convert points to line string objects using
-:py:func:`geocoon.as_line_string` function::
+The points of each category can be converted to a line string geometries
+using :py:func:`geocoon.as_line_string` function::
 
     >>> route = geocoon.as_line_string(g_data.location)
 
-Calculate time of first and last points of each line::
+Time of first and last points of each line can be calculated using standard
+Pandas methods::
 
     >>> start = g_data.time.first()
     >>> end = g_data.time.last()
 
-And finally compose the data into a report::
+Finally, we compose analyzed data into a report with start time, end time
+and line length for each category::
 
     >>> report = geocoon.GeoDataFrame({})
     >>> report['start'] = start
