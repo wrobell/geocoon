@@ -44,7 +44,7 @@ frames with Shapely GIS geometries.
     ],
     keywords='gis',
     license='GPL',
-    install_requires = ['shapely >= 1.3', 'pandas >= 0.13.1'],
+    install_requires = ['shapely >= 1.3', 'pandas >= 0.14.0'],
     test_suite='nose.collector',
 )
 

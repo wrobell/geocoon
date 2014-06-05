@@ -41,8 +41,6 @@ and GIS data frame containing the point series object::
     0  POINT (1 1)
     1  POINT (2 2)
     2  POINT (3 3)
-    <BLANKLINE>
-    [3 rows x 1 columns]
 
 Adding GIS series to exisiting data frame is supported as well::
 
@@ -53,8 +51,6 @@ Adding GIS series to exisiting data frame is supported as well::
     0     4  POINT (1 1)
     1     5  POINT (2 2)
     2     6  POINT (3 3)
-    <BLANKLINE>
-    [3 rows x 2 columns]
 
 
 SQL/MM Database Access
@@ -157,8 +153,6 @@ Given the data frame::
     1   b  POINT (2 2)     2
     2   b  POINT (3 3)     3
     3   a  POINT (4 4)     4
-    <BLANKLINE>
-    [4 rows x 3 columns]
 
 Select the data for category `a`::
 
@@ -166,8 +160,6 @@ Select the data for category `a`::
       cat     location  time
     0   a  POINT (1 1)     1
     3   a  POINT (4 4)     4
-    <BLANKLINE>
-    [2 rows x 3 columns]
 
 Select data for points, which `x` coordinate is greater than `1.5`::
 
@@ -176,8 +168,6 @@ Select data for points, which `x` coordinate is greater than `1.5`::
     1   b  POINT (2 2)     2
     2   b  POINT (3 3)     3
     3   a  POINT (4 4)     4
-    <BLANKLINE>
-    [3 rows x 3 columns]
 
 
 Split-Apply-Combine
@@ -215,8 +205,6 @@ and line length for each category::
     cat                      
     a        1    4  4.242641
     b        2    3  1.414214
-    <BLANKLINE>
-    [2 rows x 3 columns]
 
 
 .. vim: sw=4:et:ai
