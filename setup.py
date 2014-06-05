@@ -25,7 +25,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='geocoon',
-    version='0.1.0',
+    version='0.2.0',
     description='GIS data analysis library based on Pandas and Shapely',
     long_description="""\
 GeoCoon is GIS data analysis Python library, which integrates Pandas data

@@ -22,7 +22,7 @@ GeoCoon is a library to integrate Shapely GIS geometries with Pandas data
 frames.
 """
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 from .core import GeoDataFrame, PointSeries, LineStringSeries, \
     PolygonSeries
